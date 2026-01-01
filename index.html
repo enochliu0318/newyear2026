@@ -26,7 +26,7 @@
         }
 
         h1 {
-            font-size: 4rem;
+            font-size: 4.5rem;
             color: #ffd700;
             text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
             margin-bottom: 10px;
@@ -39,16 +39,16 @@
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 50px; /* 稍微拉开一点距离，方便点击 */
+            gap: 50px; 
             z-index: 100;
         }
 
         .btn {
-            font-size: 3.5rem; /* 稍微调大一点点，让纯表情更容易点到 */
+            font-size: 3.5rem; 
             cursor: pointer;
-            background: none; /* 删掉背景圆圈 */
+            background: none; 
             padding: 10px;
-            border: none; /* 删掉边框 */
+            border: none; 
             transition: transform 0.2s;
             display: flex;
             align-items: center;
@@ -57,7 +57,7 @@
             box-shadow: none; /* 删掉阴影 */
         }
 
-        .btn:active { transform: scale(0.8); } /* 点击缩放效果增强点，增加反馈感 */
+        .btn:active { transform: scale(0.8); } 
 
         canvas { display: block; cursor: crosshair; }
     </style>
@@ -171,14 +171,25 @@
         }
 
         function animate() {
-            ctx.fillStyle = 'rgba(139, 0, 0, 0.5)';
+            // 1. 稍微调高一点透明度，加快“旧痕迹”的消退速度
+            ctx.fillStyle = 'rgba(139, 0, 0, 0.25)'; 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // 2. 核心：每隔 60 帧（大约1秒）强制进行一次彻底的微弱清空，防止像素残留
+            if (Math.random() < 0.02) {
+                ctx.fillStyle = 'rgb(139, 0, 0)';
+                ctx.globalAlpha = 0.1;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.globalAlpha = 1.0;
+            }
 
             for (let i = particles.length - 1; i >= 0; i--) {
                 const p = particles[i];
                 p.update();
                 p.draw();
-                if (p.alpha <= 0) {
+                
+                // 3. 提高清理阈值：透明度低于 0.15 就直接干掉，不让它在看不见的时候还堆积像素
+                if (p.alpha <= 0.15) { 
                     particles.splice(i, 1);
                 }
             }
