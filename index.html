@@ -39,27 +39,25 @@
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 30px;
+            gap: 50px; /* 稍微拉开一点距离，方便点击 */
             z-index: 100;
         }
 
         .btn {
-            font-size: 3rem;
+            font-size: 3.5rem; /* 稍微调大一点点，让纯表情更容易点到 */
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 50%;
+            background: none; /* 删掉背景圆圈 */
+            padding: 10px;
+            border: none; /* 删掉边框 */
             transition: transform 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             -webkit-tap-highlight-color: transparent;
+            box-shadow: none; /* 删掉阴影 */
         }
 
-        .btn:active { transform: scale(0.9); }
-        .btn:hover { background: rgba(255, 255, 255, 0.2); }
+        .btn:active { transform: scale(0.8); } /* 点击缩放效果增强点，增加反馈感 */
 
         canvas { display: block; cursor: crosshair; }
     </style>
